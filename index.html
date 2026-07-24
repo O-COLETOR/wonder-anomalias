@@ -3,46 +3,57 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Universal Local Anomalous Wiki</title>
+<title>Arquivo Confidencial — Casos Anômalos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
 <style>
+:root {
+  --paper: #e8e0c7;
+  --paper-dark: #d9cfa9;
+  --ink: #201c14;
+  --ink-faded: #4a4231;
+  --stamp-red: #7d1c14;
+  --redact: #17140f;
+  --rule: #a4956b;
+}
 html, body {
   margin: 0;
   min-height: 100%;
-  background-color: #000000;
+  background-color: #16140f;
   background-image:
-    repeating-linear-gradient(
-      0deg,
-      rgba(255,255,255,0.015) 0px,
-      rgba(255,255,255,0.015) 1px,
-      transparent 1px,
-      transparent 4px
-    ),
-    repeating-linear-gradient(
-      90deg,
-      rgba(255,255,255,0.01) 0px,
-      rgba(255,255,255,0.01) 1px,
-      transparent 1px,
-      transparent 4px
-    );
-  color: #eaeaea;
-  font-family: Arial, sans-serif;
+    radial-gradient(ellipse at center, #221f17 0%, #0e0c08 100%);
+  color: var(--ink);
+  font-family: "Courier Prime", "Courier New", monospace;
   overflow: hidden;
 }
 body { margin: 0; }
 h1 {
   text-align: center;
-  padding: 20px;
+  padding: 22px 20px 4px 20px;
   margin: 0;
   flex: 0 0 auto;
-  color: #f3f6f4;
-  transform: translateX(-14px);
+  color: #e8e0c7;
+  font-family: "Special Elite", "Courier New", monospace;
+  font-size: 22px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+.subtitle {
+  text-align: center;
+  color: #8c8266;
+  font-family: "Courier Prime", monospace;
+  font-size: 11px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin: 0 0 16px 0;
 }
 #viewer {
   width: 100%;
-  height: calc(100vh - 70px);
-  height: calc(100svh - 70px);
+  height: calc(100vh - 92px);
+  height: calc(100svh - 92px);
   box-sizing: border-box;
-  padding: 20px 16px 16px 16px;
+  padding: 12px 16px 16px 16px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -54,10 +65,10 @@ h1 {
   padding-right: 58px;
   box-sizing: border-box;
   overflow: visible;
-  animation: fadeInPost 0.5s ease-out forwards;
+  animation: fadeInPost 0.45s ease-out forwards;
 }
 @keyframes fadeInPost {
-  from { opacity: 0; transform: translateY(15px); }
+  from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
 }
 .post {
@@ -67,50 +78,99 @@ h1 {
   background:
     repeating-linear-gradient(
       0deg,
-      rgba(255,255,255,0.015) 0px,
-      rgba(255,255,255,0.015) 1px,
+      rgba(0,0,0,0.02) 0px,
+      rgba(0,0,0,0.02) 1px,
       transparent 1px,
-      transparent 4px
+      transparent 3px
     ),
-    #161622;
-  border: 1px solid #b6abb6;
+    var(--paper);
+  border: 1px solid var(--ink);
   border-radius: 0;
-  padding: 10px;
+  padding: 18px 16px 14px 16px;
   box-sizing: border-box;
   overflow: visible;
   display: flex;
   flex-direction: column;
+  box-shadow: 5px 5px 0 rgba(0,0,0,0.35);
 }
-.post.comments-open { height: calc(100svh - 165px) !important; }
+.post::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 6px;
+  background-image: repeating-linear-gradient(90deg, var(--ink) 0 6px, transparent 6px 12px);
+  opacity: 0.35;
+}
+.post.comments-open { height: calc(100svh - 185px) !important; }
 .post.comments-open .title,
-.post.comments-open .body-shell { display: none !important; }
+.post.comments-open .body-shell,
+.post.comments-open .case-meta { display: none !important; }
 .post.comments-open .comment-box {
   position: relative;
   top: auto; left: auto; right: auto; bottom: auto;
   height: 100%;
-  background: #161622;
+  background: transparent;
   border: none;
   box-shadow: none;
   padding: 0;
 }
+.case-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  color: var(--ink-faded);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  border-bottom: 1px dashed var(--rule);
+  padding-bottom: 6px;
+  margin-bottom: 10px;
+}
 .title {
   text-align: center;
-  margin: 10px 0 15px 0;
-  font-weight: bold;
+  margin: 4px 0 14px 0;
+  font-family: "Special Elite", "Courier New", monospace;
+  font-weight: normal;
   font-size: 18px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
   flex: 0 0 auto;
+  border-bottom: 2px double var(--ink);
+  padding-bottom: 10px;
 }
 .tag {
   position: absolute;
-  top: -14px;
+  top: -12px;
   right: 10px;
-  background: #2a2a3f;
-  color: #fff;
-  padding: 5px 10px;
-  font-size: 12px;
-  border: 1px solid #444;
+  background: var(--paper);
+  color: var(--stamp-red);
+  padding: 4px 10px;
+  font-size: 11px;
+  font-family: "Special Elite", monospace;
+  border: 2px solid var(--stamp-red);
+  border-radius: 3px;
   text-transform: uppercase;
+  letter-spacing: 2px;
+  transform: rotate(-3deg);
   z-index: 12;
+}
+.stamp {
+  position: absolute;
+  left: 14px;
+  bottom: 10px;
+  font-family: "Special Elite", monospace;
+  font-size: 13px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--stamp-red);
+  border: 3px solid var(--stamp-red);
+  border-radius: 4px;
+  padding: 4px 10px;
+  transform: rotate(-8deg);
+  opacity: 0.75;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+  z-index: 9;
+  background: transparent;
 }
 .comment-btn, .account-btn {
   position: absolute;
@@ -118,35 +178,38 @@ h1 {
   width: 42px;
   height: 42px;
   padding: 0;
-  border: none;
-  background: transparent;
+  border: 1px solid var(--ink);
+  background: var(--paper);
   cursor: pointer;
   user-select: none;
   z-index: 11;
   display: flex;
   align-items: center;
   justify-content: center;
-  opacity: 0.85;
+  opacity: 0.92;
   transition: opacity 0.2s, transform 0.2s;
 }
 .comment-btn { top: 34px; }
 .account-btn { top: 80px; }
-.comment-btn svg, .account-btn svg { width: 30px; height: 30px; display: block; }
+.comment-btn svg, .account-btn svg { width: 22px; height: 22px; display: block; }
 .comment-btn:hover, .account-btn:hover { opacity: 1; transform: scale(1.05); }
 .body-shell {
   position: relative;
   flex: 0 0 auto;
-  max-height: calc(100svh - 210px);
+  max-height: calc(100svh - 250px);
   overflow-y: auto;
   overflow-x: hidden;
   padding-right: 2px;
   box-sizing: border-box;
 }
 .image-container {
-  width: 40%;
-  margin: 0 auto 15px auto;
-  background: #1f1f30;
-  border-radius: 6px;
+  width: 46%;
+  margin: 0 auto 16px auto;
+  background: #fdfaf0;
+  padding: 6px 6px 20px 6px;
+  border: 1px solid #b8ac82;
+  box-shadow: 3px 3px 0 rgba(0,0,0,0.25);
+  transform: rotate(-1.5deg);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -159,15 +222,17 @@ h1 {
   display: block;
   max-width: 100%;
   opacity: 0;
+  filter: sepia(0.35) contrast(1.05) brightness(0.96) saturate(0.85);
   transition: opacity 0.3s ease-in-out;
 }
 .post .main-media.loaded { opacity: 1; }
 .text-shell { position: relative; overflow: visible; }
 .text {
-  text-align: justify;
-  line-height: 1.6;
-  font-family: "Courier New", monospace;
+  text-align: left;
+  line-height: 1.7;
+  font-family: "Courier Prime", "Courier New", monospace;
   font-size: 14px;
+  color: var(--ink);
   white-space: pre-line;
   overflow-wrap: anywhere;
 }
@@ -175,18 +240,30 @@ h1 {
   position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
   z-index: 20;
-  background: #0f0f18;
-  padding: 10px;
-  border-radius: 8px;
-  border: 1px solid #333;
+  background: var(--paper);
+  padding: 12px;
+  border-radius: 0;
+  border: 1px solid var(--ink);
   display: flex;
   flex-direction: column;
   gap: 8px;
   box-sizing: border-box;
   overflow: visible;
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+  box-shadow: 5px 5px 0 rgba(0,0,0,0.3);
 }
 .comment-box[hidden] { display: none !important; }
+.comment-box::before {
+  content: "ANEXO — REGISTRO DE TESTEMUNHOS";
+  display: block;
+  font-family: "Special Elite", monospace;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--ink-faded);
+  border-bottom: 1px dashed var(--rule);
+  padding-bottom: 6px;
+  margin-bottom: 2px;
+}
 .comment-list {
   flex: 1 1 auto;
   min-height: 0;
@@ -198,55 +275,155 @@ h1 {
 .comment {
   font-size: 13px;
   margin-bottom: 8px;
-  border-bottom: 1px solid #222;
-  padding-bottom: 5px;
-  line-height: 1.4;
+  border-bottom: 1px dashed var(--rule);
+  padding-bottom: 6px;
+  line-height: 1.5;
   word-break: break-word;
+  color: var(--ink);
 }
-.comment-empty { font-size: 13px; opacity: 0.7; margin-bottom: 8px; }
+.comment b { font-family: "Special Elite", monospace; font-weight: normal; }
+.comment-empty { font-size: 13px; opacity: 0.7; margin-bottom: 8px; font-style: italic; }
 .comment-form { flex: 0 0 auto; }
 .comment-form input,
 .comment-form textarea {
   width: 100%;
   margin-top: 5px;
   margin-bottom: 5px;
-  background: #111;
-  border: 1px solid #333;
-  color: white;
-  padding: 6px;
-  border-radius: 5px;
+  background: #fdfaf0;
+  border: 1px solid var(--ink);
+  color: var(--ink);
+  padding: 8px;
+  border-radius: 0;
   box-sizing: border-box;
-  font-family: Arial, sans-serif;
+  font-family: "Courier Prime", monospace;
 }
-.comment-form textarea { min-height: 70px; resize: vertical; font-family: Arial, sans-serif; }
+.comment-form textarea { min-height: 70px; resize: vertical; }
 .comment-form button {
   width: 100%;
-  padding: 8px;
-  background: #2a2a3f;
+  padding: 9px;
+  background: var(--ink);
   border: none;
-  color: white;
+  color: var(--paper);
   cursor: pointer;
-  border-radius: 5px;
+  border-radius: 0;
+  font-family: "Special Elite", monospace;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-size: 12px;
 }
-.comment-form button:hover { filter: brightness(1.1); }
-.comment-form .as-who { font-size: 12px; opacity: 0.7; margin: 0 0 4px 0; }
+.comment-form button:hover { background: var(--stamp-red); }
+.comment-form button:disabled { background: #6b6552; cursor: default; }
+.comment-form .as-who { font-size: 11px; opacity: 0.75; margin: 0 0 4px 0; text-transform: uppercase; letter-spacing: 1px; }
 .hint {
   position: fixed;
   left: 50%;
-  bottom: 10px;
+  bottom: 8px;
   transform: translateX(-50%);
-  font-size: 11px;
-  opacity: 0.55;
+  font-size: 10px;
+  color: #8c8266;
+  letter-spacing: 1px;
+  text-transform: uppercase;
   pointer-events: none;
   z-index: 5;
   white-space: nowrap;
 }
 
+/* --- denúncia + painel admin --- */
+.comment-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 6px; }
+.comment-row > span { flex: 1 1 auto; }
+.report-btn {
+  flex: 0 0 auto;
+  border: 1px solid var(--stamp-red);
+  background: var(--paper);
+  color: var(--stamp-red);
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  font-size: 11px;
+  line-height: 16px;
+  text-align: center;
+  cursor: pointer;
+  padding: 0;
+  font-weight: bold;
+}
+.report-btn:hover { background: var(--stamp-red); color: var(--paper); }
+#admin-view { display: none; }
+body.admin-mode #viewer, body.admin-mode .hint, body.admin-mode h1, body.admin-mode .subtitle { display: none !important; }
+body.admin-mode #admin-view {
+  display: block;
+  min-height: 100vh;
+  box-sizing: border-box;
+  padding: 40px 16px;
+  font-family: "Courier Prime", monospace;
+}
+.admin-login {
+  width: min(340px, 100%);
+  margin: 0 auto;
+  background: var(--paper);
+  border: 1px solid var(--ink);
+  padding: 18px;
+  box-sizing: border-box;
+  box-shadow: 5px 5px 0 rgba(0,0,0,0.3);
+}
+.admin-login h2 {
+  font-family: "Special Elite", monospace;
+  font-size: 15px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-align: center;
+  margin: 0 0 12px 0;
+  color: var(--stamp-red);
+}
+.admin-login label { display: block; font-size: 11px; opacity: 0.85; margin: 10px 0 4px 0; text-transform: uppercase; letter-spacing: 1px; }
+.admin-login input {
+  width: 100%;
+  background: #fdfaf0;
+  border: 1px solid var(--ink);
+  color: var(--ink);
+  padding: 8px;
+  box-sizing: border-box;
+  font-family: "Courier Prime", monospace;
+}
+.admin-login button {
+  width: 100%;
+  margin-top: 14px;
+  padding: 10px;
+  background: var(--ink);
+  border: none;
+  color: var(--paper);
+  cursor: pointer;
+  font-family: "Special Elite", monospace;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-size: 12px;
+}
+.admin-login .error-msg { color: var(--stamp-red); font-size: 12px; margin-top: 10px; min-height: 14px; }
+.admin-list { width: min(700px, 100%); margin: 0 auto; color: var(--paper); }
+.admin-list h2 { text-align: center; font-family: "Special Elite", monospace; letter-spacing: 3px; text-transform: uppercase; color: var(--paper); }
+.report-card { background: var(--paper); border: 1px solid var(--ink); padding: 12px; margin-bottom: 12px; color: var(--ink); box-shadow: 4px 4px 0 rgba(0,0,0,0.3); }
+.report-card .meta { font-size: 11px; opacity: 0.65; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 1px; font-family: "Special Elite", monospace; }
+.report-card .txt { font-size: 14px; margin-bottom: 10px; word-break: break-word; font-family: "Courier Prime", monospace; }
+.report-card .actions { display: flex; gap: 8px; }
+.report-card button {
+  flex: 1;
+  padding: 8px;
+  border: none;
+  cursor: pointer;
+  color: #fff;
+  font-family: "Special Elite", monospace;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-size: 11px;
+}
+.report-card .btn-del { background: var(--stamp-red); }
+.report-card .btn-dismiss { background: var(--ink); }
+.report-empty { text-align: center; opacity: 0.85; margin-top: 40px; color: var(--paper); font-family: "Special Elite", monospace; letter-spacing: 1px; }
+
 /* --- modal de conta --- */
 .account-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.75);
+  background: rgba(10,9,6,0.85);
   z-index: 100;
   display: flex;
   align-items: center;
@@ -257,60 +434,73 @@ h1 {
 .account-overlay[hidden] { display: none !important; }
 .account-modal {
   width: min(360px, 100%);
-  background: #161622;
-  border: 1px solid #b6abb6;
-  padding: 18px;
+  background: var(--paper);
+  border: 1px solid var(--ink);
+  padding: 20px;
   box-sizing: border-box;
-  font-family: Arial, sans-serif;
+  font-family: "Courier Prime", monospace;
+  box-shadow: 6px 6px 0 rgba(0,0,0,0.35);
 }
 .account-modal h2 {
+  font-family: "Special Elite", monospace;
   font-size: 16px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
   margin: 0 0 4px 0;
   text-align: center;
+  color: var(--stamp-red);
 }
 .account-modal p.sub {
-  font-size: 12px;
-  opacity: 0.7;
+  font-size: 11px;
+  opacity: 0.75;
   text-align: center;
   margin: 0 0 14px 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 .account-modal label {
   display: block;
-  font-size: 12px;
+  font-size: 11px;
   opacity: 0.85;
   margin: 10px 0 4px 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 .account-modal input {
   width: 100%;
-  background: #111;
-  border: 1px solid #333;
-  color: white;
+  background: #fdfaf0;
+  border: 1px solid var(--ink);
+  color: var(--ink);
   padding: 8px;
-  border-radius: 5px;
   box-sizing: border-box;
-  font-family: Arial, sans-serif;
+  font-family: "Courier Prime", monospace;
 }
 .account-modal button.primary {
   width: 100%;
   margin-top: 16px;
   padding: 10px;
-  background: #2a2a3f;
+  background: var(--ink);
   border: none;
-  color: white;
+  color: var(--paper);
   cursor: pointer;
-  border-radius: 5px;
+  font-family: "Special Elite", monospace;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-size: 12px;
 }
-.account-modal button.primary:hover { filter: brightness(1.1); }
+.account-modal button.primary:hover { background: var(--stamp-red); }
 .account-modal .switch-mode {
   margin-top: 12px;
   text-align: center;
-  font-size: 12px;
+  font-size: 11px;
   opacity: 0.8;
   cursor: pointer;
   text-decoration: underline;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 .account-modal .error-msg {
-  color: #ff8080;
+  color: var(--stamp-red);
   font-size: 12px;
   margin-top: 10px;
   min-height: 14px;
@@ -320,103 +510,29 @@ h1 {
   text-align: center;
   line-height: 1.6;
 }
-/* --- denúncia + painel admin --- */
-.comment-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 6px; }
-.comment-row > span { flex: 1 1 auto; }
-.report-btn {
-  flex: 0 0 auto;
-  border: none;
-  background: #c62828;
-  color: #fff;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  font-size: 11px;
-  line-height: 18px;
-  text-align: center;
-  cursor: pointer;
-  padding: 0;
-  font-weight: bold;
-}
-.report-btn:hover { filter: brightness(1.15); }
-#admin-view { display: none; }
-body.admin-mode #viewer, body.admin-mode .hint { display: none !important; }
-body.admin-mode #admin-view {
-  display: block;
-  min-height: 100vh;
-  box-sizing: border-box;
-  padding: 40px 16px;
-  font-family: Arial, sans-serif;
-}
-.admin-login {
-  width: min(340px, 100%);
-  margin: 0 auto;
-  background: #161622;
-  border: 1px solid #b6abb6;
-  padding: 18px;
-  box-sizing: border-box;
-}
-.admin-login h2 { font-size: 16px; text-align: center; margin: 0 0 12px 0; }
-.admin-login label { display: block; font-size: 12px; opacity: 0.85; margin: 10px 0 4px 0; }
-.admin-login input {
-  width: 100%;
-  background: #111;
-  border: 1px solid #333;
-  color: #fff;
-  padding: 8px;
-  border-radius: 5px;
-  box-sizing: border-box;
-  font-family: Arial, sans-serif;
-}
-.admin-login button {
-  width: 100%;
-  margin-top: 14px;
-  padding: 10px;
-  background: #2a2a3f;
-  border: none;
-  color: #fff;
-  cursor: pointer;
-  border-radius: 5px;
-}
-.admin-login .error-msg { color: #ff8080; font-size: 12px; margin-top: 10px; min-height: 14px; }
-.admin-list { width: min(700px, 100%); margin: 0 auto; }
-.admin-list h2 { text-align: center; }
-.report-card { background: #161622; border: 1px solid #444; padding: 12px; margin-bottom: 12px; }
-.report-card .meta { font-size: 11px; opacity: 0.6; margin-bottom: 6px; }
-.report-card .txt { font-size: 14px; margin-bottom: 10px; word-break: break-word; }
-.report-card .actions { display: flex; gap: 8px; }
-.report-card button {
-  flex: 1;
-  padding: 8px;
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
-  color: #fff;
-}
-.report-card .btn-del { background: #7a1f1f; }
-.report-card .btn-dismiss { background: #2a2a3f; }
-.report-empty { text-align: center; opacity: 0.7; margin-top: 40px; }
-
 @media (max-width: 600px) {
-  h1 { padding: 16px 12px 10px 12px; font-size: 20px; }
-  #viewer { height: calc(100vh - 58px); height: calc(100svh - 58px); padding: 16px 12px 12px 12px; }
+  h1 { padding: 18px 12px 4px 12px; font-size: 17px; letter-spacing: 2px; }
+  .subtitle { font-size: 9px; letter-spacing: 2px; margin-bottom: 10px; }
+  #viewer { height: calc(100vh - 76px); height: calc(100svh - 76px); padding: 10px 12px 12px 12px; }
   .post-wrap { padding-right: 52px; }
-  .post { padding: 10px; border-radius: 0; }
-  .post.comments-open { height: calc(100svh - 140px) !important; }
-  .title { font-size: 16px; margin: 8px 0 12px 0; }
-  .image-container { width: 85%; }
-  .text { font-size: 13px; line-height: 1.5; }
-  .tag { font-size: 11px; top: -12px; right: 8px; padding: 4px 8px; }
-  .comment-btn { top: 30px; right: 8px; width: 42px; height: 42px; stroke: #22182a }
-  .account-btn { top: 76px; right: 8px; width: 42px; height: 42px; }
-  .body-shell { max-height: calc(100svh - 180px); }
+  .post { padding: 16px 12px 12px 12px; border-radius: 0; }
+  .post.comments-open { height: calc(100svh - 158px) !important; }
+  .title { font-size: 15px; margin: 4px 0 12px 0; padding-bottom: 8px; }
+  .image-container { width: 88%; }
+  .text { font-size: 13px; line-height: 1.6; }
+  .tag { font-size: 10px; top: -10px; right: 6px; padding: 3px 8px; }
+  .stamp { font-size: 11px; left: 10px; bottom: 8px; padding: 3px 8px; }
+  .comment-btn { top: 30px; right: 8px; width: 40px; height: 40px; }
+  .account-btn { top: 74px; right: 8px; width: 40px; height: 40px; }
+  .body-shell { max-height: calc(100svh - 215px); }
 }
 </style>
 </head>
 <body>
-<h1>Universal Local Anomalous Wiki</h1>
+<h1>Arquivo Confidencial</h1>
+<div class="subtitle">Casos anômalos não catalogados</div>
 <div id="viewer"></div>
-<div class="hint">Rolar 2x no celular ou scrolar/setinhas no pc para o próximo relatório</div>
+<div class="hint">role 2x (ou use as setas) para acessar o próximo processo</div>
 
 <div class="account-overlay" id="account-overlay" hidden>
   <div class="account-modal" id="account-modal"></div>
@@ -879,7 +995,7 @@ function startCooldown(btn) {
     if (secondsLeft <= 0) {
       clearInterval(timer);
       btn.disabled = false;
-      btn.textContent = "Enviar";
+      btn.textContent = "Registrar";
     } else {
       btn.textContent = `Aguarda ${secondsLeft}s`;
     }
@@ -917,6 +1033,16 @@ async function sendComment(postId) {
 }
 
 /* ================== RENDER DOS POSTS ================== */
+function getClassificationLabel(post) {
+  const level = getPostLevel(post);
+  if (level === 6) return "EXISTÊNCIA NEGADA";
+  if (level === 5) return "ULTRASSECRETO";
+  if (level === 4) return "SECRETO";
+  if (level === 3) return "SIGILOSO";
+  if (level === 2 || level === 1) return "RESERVADO";
+  return "CONFIDENCIAL";
+}
+
 function createPostElement(post, index) {
   const wrap = document.createElement("section");
   wrap.className = "post-wrap";
@@ -929,18 +1055,24 @@ function createPostElement(post, index) {
   }
   html += `
     <button class="comment-btn" type="button" aria-label="Abrir comentários" data-action="toggle-comments" data-post-id="${postId}">
-      <svg viewBox="0 0 24 24" fill="none" stroke="#eaeaea" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#201c14" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
       </svg>
     </button>
     <button class="account-btn" type="button" aria-label="Sua conta" data-action="open-account">
-      <svg viewBox="0 0 24 24" fill="none" stroke="#eaeaea" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#201c14" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <circle cx="12" cy="8" r="4"></circle>
         <path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"></path>
       </svg>
     </button>
   `;
   html += `<article class="post">`;
+  html += `
+    <div class="case-meta">
+      <span>Processo Nº ${String(index + 1).padStart(4, "0")}</span>
+      <span>${escapeHtml(getClassificationLabel(post))}</span>
+    </div>
+  `;
   if (post.title && String(post.title).trim() !== "") {
     html += `<div class="title">${escapeHtml(post.title)}</div>`;
   }
@@ -969,12 +1101,13 @@ function createPostElement(post, index) {
         <div class="text">${escapeHtml(post.text || "")}</div>
       </div>
     </div>
+    <div class="stamp">${escapeHtml(getClassificationLabel(post))}</div>
     <div class="comment-box" id="cbox-${postId}" hidden>
       <div class="comment-list" id="comments-${postId}"></div>
       <div class="comment-form">
-        <div class="as-who">comentando como <b>${escapeHtml(currentNome || "?")}</b></div>
-        <textarea id="text-${postId}" placeholder="Comentário"></textarea>
-        <button type="button" data-action="send-comment" data-post-id="${postId}">Enviar</button>
+        <div class="as-who">testemunho registrado como <b>${escapeHtml(currentNome || "?")}</b></div>
+        <textarea id="text-${postId}" placeholder="Relate o que presenciou..."></textarea>
+        <button type="button" data-action="send-comment" data-post-id="${postId}">Registrar</button>
       </div>
     </div>
   </article>
