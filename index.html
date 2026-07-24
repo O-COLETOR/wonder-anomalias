@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Arquivo Confidencial — Casos Anômalos</title>
+<title>Universal Local Anomalous Wiki</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
@@ -58,6 +58,7 @@ h1 {
   align-items: center;
   justify-content: center;
   overflow: visible;
+  perspective: 1500px;
 }
 .post-wrap {
   position: relative;
@@ -65,11 +66,15 @@ h1 {
   padding-right: 58px;
   box-sizing: border-box;
   overflow: visible;
-  animation: fadeInPost 0.45s ease-out forwards;
 }
-@keyframes fadeInPost {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+.post-wrap.page-enter {
+  transform-origin: top center;
+  animation: pageFlipIn 0.55s cubic-bezier(.22, 1, .36, 1) both;
+}
+@keyframes pageFlipIn {
+  0% { transform: rotateX(-100deg) translateY(-14%); opacity: 0.25; }
+  55% { opacity: 1; }
+  100% { transform: rotateX(0deg) translateY(0); opacity: 1; }
 }
 .post {
   position: relative;
@@ -109,10 +114,11 @@ h1 {
   position: relative;
   top: auto; left: auto; right: auto; bottom: auto;
   height: 100%;
-  background: transparent;
-  border: none;
+  background: #f3dd7e;
+  border: 1px solid #b8a13a;
   box-shadow: none;
-  padding: 0;
+  padding: 10px;
+  transform: rotate(-0.5deg);
 }
 .case-meta {
   display: flex;
@@ -240,18 +246,38 @@ h1 {
   position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
   z-index: 20;
-  background: var(--paper);
+  background: #f3dd7e;
   padding: 12px;
   border-radius: 0;
-  border: 1px solid var(--ink);
+  border: 1px solid #b8a13a;
   display: flex;
   flex-direction: column;
   gap: 8px;
   box-sizing: border-box;
   overflow: visible;
   box-shadow: 5px 5px 0 rgba(0,0,0,0.3);
+  transform: rotate(-1deg);
+}
+.comment-box.postit-in {
+  animation: postItThrow 0.5s cubic-bezier(.22, 1.5, .4, 1) both;
+}
+@keyframes postItThrow {
+  0% { transform: translate(160px, -110px) rotate(28deg) scale(0.35); opacity: 0; }
+  65% { opacity: 1; }
+  100% { transform: translate(0, 0) rotate(-1deg) scale(1); opacity: 1; }
 }
 .comment-box[hidden] { display: none !important; }
+.comment-box::after {
+  content: "";
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-2deg);
+  width: 50px;
+  height: 16px;
+  background: rgba(232, 224, 190, 0.65);
+  border: 1px solid rgba(0,0,0,0.15);
+}
 .comment-box::before {
   content: "ANEXO — REGISTRO DE TESTEMUNHOS";
   display: block;
@@ -434,12 +460,16 @@ body.admin-mode #admin-view {
 .account-overlay[hidden] { display: none !important; }
 .account-modal {
   width: min(360px, 100%);
-  background: var(--paper);
-  border: 1px solid var(--ink);
+  background: #f3dd7e;
+  border: 1px solid #b8a13a;
   padding: 20px;
   box-sizing: border-box;
   font-family: "Courier Prime", monospace;
   box-shadow: 6px 6px 0 rgba(0,0,0,0.35);
+  transform: rotate(-1.5deg);
+}
+.account-modal.postit-in {
+  animation: postItThrow 0.5s cubic-bezier(.22, 1.5, .4, 1) both;
 }
 .account-modal h2 {
   font-family: "Special Elite", monospace;
@@ -529,7 +559,7 @@ body.admin-mode #admin-view {
 </style>
 </head>
 <body>
-<h1>Arquivo Confidencial</h1>
+<h1>Universal Local Anomalous Wiki</h1>
 <div class="subtitle">Casos anômalos não catalogados</div>
 <div id="viewer"></div>
 <div class="hint">role 2x (ou use as setas) para acessar o próximo processo</div>
@@ -584,6 +614,9 @@ function openAccountModal(mode) {
   modalMode = mode || "cadastro";
   renderModal();
   overlay.hidden = false;
+  modalEl.classList.remove("postit-in");
+  void modalEl.offsetWidth;
+  modalEl.classList.add("postit-in");
 }
 function closeAccountModal() {
   overlay.hidden = true;
@@ -959,7 +992,12 @@ function toggleComments(postId) {
   el.hidden = !willOpen;
   const postEl = el.closest(".post");
   if (postEl) postEl.classList.toggle("comments-open", willOpen);
-  if (willOpen) loadAndRenderComments(postId);
+  if (willOpen) {
+    el.classList.remove("postit-in");
+    void el.offsetWidth;
+    el.classList.add("postit-in");
+    loadAndRenderComments(postId);
+  }
 }
 
 async function reportComment(postId, commentId) {
@@ -1120,7 +1158,9 @@ function showPost(index) {
   if (index < 0 || index >= postsData.length) return;
   currentPostIndex = index;
   rememberPostIndex(index);
-  viewer.replaceChildren(createPostElement(postsData[index], index));
+  const el = createPostElement(postsData[index], index);
+  el.classList.add("page-enter");
+  viewer.replaceChildren(el);
   window.scrollTo(0, 0);
   advanceArmed = false;
   nextPostIndex = pickNextPostIndex();
